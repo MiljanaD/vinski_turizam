@@ -1,0 +1,30 @@
+body {
+    font-family: 'Abel', sans-serif;
+}
+
+.register-box {
+    right: 15%;
+    top: 10%;
+    bottom: 10%;
+    color: white;
+}
+
+.login-box {
+    right: 15%;
+    top: 20%;
+    bottom: 20%;
+    color: white;
+}
+
+.red-text-link {
+    color: red;
+    text-decoration: none;
+}
+
+.remember-me:checked{
+    background-color: red !important;
+}
+
+input.is-valid ~ .form-check-label {
+    color: white !important;
+}
