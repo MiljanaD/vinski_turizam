@@ -11,13 +11,14 @@ use common\models\User;
  */
 class SignupForm extends Model
 {
-    public $ime;
-    public $prezime;
+    public $name;
+    public $surname;
     public $email;
-    public $lozinka;
-    public $lozinkaPonovo;
-    public $brojTelefona;
-    public $id_adrese;
+    public $password;
+    public $passwordAgain;
+    public $phoneNumber;
+    public $adressId;
+    public $streetNumber;
 
 
     /**
@@ -26,9 +27,13 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['ime', 'trim'],
-            ['ime', 'required', 'message' => 'Ovo polje je obavezno'],
-            ['ime', 'string', 'max' => 255],
+            ['name', 'trim'],
+            ['name', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['name', 'string', 'max' => 255],
+
+            ['surname', 'trim'],
+            ['surname', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['surname', 'string', 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required', 'message' => 'Ovo polje je obavezno'],
@@ -36,13 +41,34 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Ova email adresa je vec zauzeta.'],
 
-            ['lozinka', 'required', 'message' => 'Ovo polje je obavezno'],
-            ['lozinkaPonovo', 'required', 'message' => 'Ovo polje je obavezno'],
-            ['lozinka', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
-            ['lozinkaPonovo', 'compare', 'compareAttribute'=>'lozinka', 'skipOnEmpty' => false, 'message'=>"Lozinke se ne podudaraju"],
+            ['password', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['passwordAgain', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['passwordAgain', 'compare', 'compareAttribute' => 'lozinka', 'skipOnEmpty' => false, 'message' => "Lozinke se ne podudaraju"],
 
-            ['brojTelefona', 'required', 'message' => 'Ovo polje je obavezno'],
-            ['brojTelefona', 'string']
+            ['phoneNumber', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['phoneNumber', 'string'],
+
+            ['adressId', 'required', 'message' => 'Ovo polje je obavezno'],
+
+            ['streetNumber', 'required', 'message' => 'Ovo polje je obavezno'],
+            ['streetNumber', 'number']
+
+
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Ime',
+            'surname' => 'Prezime',
+            'email' => 'Email',
+            'password' => 'Lozinka',
+            'passwordAgain' => 'Ponovljena lozinka',
+            'phoneNumber' => 'Broj telefona',
+            'adressId' => 'Ulica',
+            'streetNumber' => 'Broj ulice'
         ];
     }
 
@@ -56,12 +82,12 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
-        $user->ime = $this->ime;
+        $user->name = $this->name;
         $user->email = $this->email;
-        $user->lozinka = $this->lozinka;
-        $user->broj_telefona = $this->brojTelefona;
+        $user->surname = $this->surname;
+        $user->street = $this->adressId;
 //        $user->generateAuthKey();
 //        $user->generateEmailVerificationToken();
 

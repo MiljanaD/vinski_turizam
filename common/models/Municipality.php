@@ -44,7 +44,7 @@ class Municipality extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Opstina',
             'city_id' => 'City ID',
         ];
     }

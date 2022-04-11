@@ -7,6 +7,8 @@
 
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Modal;
+use yii\helpers\Url;
 
 $this->title = 'Login';
 $this->context->layout = 'landing';
@@ -32,9 +34,17 @@ $this->context->layout = 'landing';
         <div class="form-group d-flex flex-column">
             <?= Html::submitButton('Prijavi se', ['class' => 'mt-3 mb-2 btn btn-danger', 'name' => 'login-button'],) ?>
             <p class="text-center mb-0"> ili </p>
-            <?= Html::a('Registruj se',\yii\helpers\Url::to('signup'), ['class' => 'mt-2 btn btn-secondary', 'name' => 'register-button'],) ?>
+            <?= Html::button('Registruj se', ['value' => Url::to('signup'), 'id' => 'openSignUp', 'class' => 'mt-2 btn btn-secondary', 'name' => 'register-button'],) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
     </div>
+
+    <?php
+
+    Modal::begin(['id' => 'signUpModal', 'title' => 'Registracija', 'titleOptions' => ['class' => 'blackText text-center w-100 fw-bold']]); ?>
+    <div class="loader"></div>
+    <?php Modal::end();
+
+    ?>
 </div>

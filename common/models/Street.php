@@ -44,7 +44,7 @@ class Street extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Ulica',
             'municipality_id' => 'Municipality ID',
         ];
     }
