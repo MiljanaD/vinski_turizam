@@ -7,6 +7,7 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\debug\panels\EventPanel;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -30,23 +31,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup','login','index'],
+                'only' => ['logout', 'signup', 'login', 'index'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup','login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout','index'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['login'],
-                        'allow' => true,
-                        'roles' => ['?']
-                    ]
                 ],
             ],
             'verbs' => [
@@ -74,6 +70,12 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     /**
      * Displays homepage.
      *
@@ -96,11 +98,13 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if(Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->request->post()['LoginForm']['password'])) {
+                return $this->goBack();
+            }
         }
 
-        $model->lozinka  = '';
+        $model->password = '';
 
         return $this->render('login', [
             'model' => $model,
@@ -126,18 +130,21 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        if(!Yii::$app->request->isAjax)
-        {
-            return $this->goHome();
-        }
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->signup(Yii::$app->request->post()['Street']['name'])) {
+                Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+                return $this->goHome();
+            }
+        }
+        else if (!Yii::$app->request->isAjax) {
             return $this->goHome();
         }
-        return $this->renderAjax('signup', [
-            'model' => $model,
-        ]);
+        else {
+            return $this->renderAjax('signup', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -193,13 +200,14 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
         try {
             $model = new VerifyEmailForm($token);
+            var_dump($model);
         } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }

@@ -19,7 +19,7 @@ $this->context->layout = 'landing';
 
         <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-        <?= $form->field($model, 'lozinka')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput() ?>
 
         <?= $form->field($model, 'zapamtiMe')->checkbox(['class' => 'form-check-input remember-me']) ?>
 

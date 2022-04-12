@@ -44,12 +44,12 @@ class SignupForm extends Model
             ['password', 'required', 'message' => 'Ovo polje je obavezno'],
             ['passwordAgain', 'required', 'message' => 'Ovo polje je obavezno'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
-            ['passwordAgain', 'compare', 'compareAttribute' => 'lozinka', 'skipOnEmpty' => false, 'message' => "Lozinke se ne podudaraju"],
+            ['passwordAgain', 'compare', 'compareAttribute' => 'password', 'skipOnEmpty' => false, 'message' => "Lozinke se ne podudaraju"],
 
             ['phoneNumber', 'required', 'message' => 'Ovo polje je obavezno'],
             ['phoneNumber', 'string'],
 
-            ['adressId', 'required', 'message' => 'Ovo polje je obavezno'],
+//            ['adressId', 'required', 'message' => 'Ovo polje je obavezno'],
 
             ['streetNumber', 'required', 'message' => 'Ovo polje je obavezno'],
             ['streetNumber', 'number']
@@ -77,7 +77,7 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
+    public function signup($street)
     {
         if (!$this->validate()) {
             return null;
@@ -87,10 +87,12 @@ class SignupForm extends Model
         $user->name = $this->name;
         $user->email = $this->email;
         $user->surname = $this->surname;
-        $user->street = $this->adressId;
+        $user->street = intval($street);
+        $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+        $user->phone_number = $this->phoneNumber;
+        $user->street_number = intval($this->streetNumber);
 //        $user->generateAuthKey();
-//        $user->generateEmailVerificationToken();
-
+        $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
     }
 
@@ -107,9 +109,9 @@ class SignupForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail']])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Registracija na ' . Yii::$app->name)
             ->send();
     }
 }

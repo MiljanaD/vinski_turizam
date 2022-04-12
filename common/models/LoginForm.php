@@ -11,7 +11,7 @@ use yii\base\Model;
 class LoginForm extends User
 {
     public $email;
-    public $lozinka;
+    public $password;
     public $zapamtiMe = true;
 
     private $_user;
@@ -23,9 +23,9 @@ class LoginForm extends User
     public function rules()
     {
         return [
-            [['email', 'lozinka'], 'required'],
+            [['email', 'password'], 'required'],
             ['zapamtiMe', 'boolean'],
-            ['lozinka', 'validatePassword'],
+            ['password', 'validatePassword'],
         ];
     }
 
@@ -40,8 +40,9 @@ class LoginForm extends User
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->lozinka)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+            $hash = $user->password;
+            if (!$user || !Yii::$app->getSecurity()->validatePassword($this->password, $hash)) {
+                $this->addError($attribute, 'Incorrect password.');
             }
         }
     }
@@ -51,7 +52,7 @@ class LoginForm extends User
      *
      * @return bool whether the user is logged in successfully
      */
-    public function login()
+    public function login($password)
     {
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->zapamtiMe ? 3600 * 24 * 30 : 0);

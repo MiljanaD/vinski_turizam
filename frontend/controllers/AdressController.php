@@ -33,7 +33,7 @@ class AdressController extends Controller
                 echo "<option value='".$municipality->id."'>".$municipality->name."</option>";
             }
         } else {
-            echo "<option>-</option>";
+            echo "<option>-Izaberite opstinu-</option>";
         }
 
     }
@@ -45,7 +45,7 @@ class AdressController extends Controller
                 echo "<option value='".$street->id."'>".$street->name."</option>";
             }
         } else {
-            echo "<option>-</option>";
+            echo "<option>-Izaberite ulicu-</option>";
         }
 
     }

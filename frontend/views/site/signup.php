@@ -36,7 +36,7 @@ $cities = ArrayHelper::map(City::find()->asArray()->all(), 'id', 'name');
             ['prompt' => '-Izaberite grad-',
                 'onchange' => '
 				$.post( "' . Yii::$app->urlManager->createUrl('adress/municipality?id=') . '"+$(this).val(), function( data ) {
-				  $( "select#municipality" ).html( data );
+				  $( "select#municipality" ).append( data );
 				});
 			']) ?>
         <?= $form->field(new Municipality(), 'name')
@@ -45,11 +45,12 @@ $cities = ArrayHelper::map(City::find()->asArray()->all(), 'id', 'name');
                 ['id' => 'municipality', 'prompt' => '-Izaberite opstinu-',
                     'onchange' => '
 				$.post( "' . Yii::$app->urlManager->createUrl('adress/street?id=') . '"+$(this).val(), function( data ) {
-				  $( "select#street" ).html( data );
+				console.log("change");
+				  $( "select#street" ).append( data );
 				});
 			'],
             ); ?>
-        <?= $form->field($model, 'adressId')
+        <?= $form->field(new Street(), 'name')
             ->dropDownList(
                 [],
                 ['id' => 'street', 'prompt' => '-Izaberite ulicu-'],
