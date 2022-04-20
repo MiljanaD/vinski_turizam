@@ -6,6 +6,31 @@ body {
     color: black;
 }
 
+.main-layout{
+    overflow: hidden;
+}
+
+.side-nav{
+    background:rgb(142,79,26);
+    color: white;
+    width: 220px;
+}
+
+.side-nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.side-nav a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.side-nav a:active{
+    text-decoration: none;
+    color: black;
+}
+
 .login-box {
     right: 15%;
     top: 20%;
@@ -13,8 +38,13 @@ body {
     color: white;
 }
 
-.red-text-link {
-    color: red;
+#signUpModal .modal-content {
+    background:rgba(255,255,255, 0.3);
+}
+
+.black-text-link {
+    color: #BB2D3B;
+    font-weight: bold;
     text-decoration: none;
 }
 

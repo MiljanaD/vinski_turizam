@@ -12,7 +12,6 @@ class LoginForm extends User
 {
     public $email;
     public $password;
-    public $zapamtiMe = true;
 
     private $_user;
 
@@ -24,7 +23,6 @@ class LoginForm extends User
     {
         return [
             [['email', 'password'], 'required'],
-            ['zapamtiMe', 'boolean'],
             ['password', 'validatePassword'],
         ];
     }
@@ -54,8 +52,29 @@ class LoginForm extends User
      */
     public function login($password)
     {
+        $user = $this->getUser();
+        if(Roles::find()->where(['id' => $user->role])->one()->role == 'admin')
+        {
+            Yii::$app->session->set('admin',true);
+        }
+        else
+        {
+            Yii::$app->session->set('admin',false);
+        }
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->zapamtiMe ? 3600 * 24 * 30 : 0);
+            if(Yii::$app->session->get('admin'))
+            {
+                return Yii::$app->user->login($user);
+            }
+            else {
+                if($user->activated == 1) {
+                    return Yii::$app->user->login($user);
+                }
+                else{
+                    Yii::$app->session->setFlash('error','Nalog nije aktiviran od strane admina');
+                    return false;
+                }
+            }
         }
         
         return false;

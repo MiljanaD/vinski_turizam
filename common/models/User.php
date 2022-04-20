@@ -19,6 +19,7 @@ use yii\web\IdentityInterface;
  * @property int $street
  * @property bool $status
  * @property string $verification_token
+ * @property bool $activated
  *
  * @property Roles $role0
  * @property Street $street0

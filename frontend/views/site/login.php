@@ -21,14 +21,12 @@ $this->context->layout = 'landing';
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
-        <?= $form->field($model, 'zapamtiMe')->checkbox(['class' => 'form-check-input remember-me']) ?>
-
-        <div class="my-1 mx-0" style="color:#999;">
-            Ako ste zaboravili sifru, mozete je <?= Html::a('resetovati', ['site/request-password-reset'],
-                ['class' => 'red-text-link']) ?>.
+        <div class="my-1 mx-0" style="color:white;">
+            Ako ste zaboravili sifru, mozete je <?= Html::a('resetovati.', ['site/request-password-reset'],
+                ['class' => 'black-text-link']) ?>
             <br>
             Trebate novi verifikacijski mail? <?= Html::a('Posalji ponovo.', ['site/resend-verification-email'],
-                ['class' => 'red-text-link']) ?>
+                ['class' => 'black-text-link']) ?>
         </div>
 
         <div class="form-group d-flex flex-column">
@@ -42,7 +40,7 @@ $this->context->layout = 'landing';
 
     <?php
 
-    Modal::begin(['id' => 'signUpModal', 'title' => 'Registracija', 'titleOptions' => ['class' => 'blackText text-center w-100 fw-bold']]); ?>
+    Modal::begin(['id' => 'signUpModal', 'title' => 'Registracija', 'titleOptions' => ['class' => 'blackText text-center w-100']]); ?>
     <div class="loader"></div>
     <?php Modal::end();
 
