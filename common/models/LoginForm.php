@@ -53,30 +53,24 @@ class LoginForm extends User
     public function login($password)
     {
         $user = $this->getUser();
-        if(Roles::find()->where(['id' => $user->role])->one()->role == 'admin')
-        {
-            Yii::$app->session->set('admin',true);
-        }
-        else
-        {
-            Yii::$app->session->set('admin',false);
-        }
-        if ($this->validate()) {
-            if(Yii::$app->session->get('admin'))
-            {
-                return Yii::$app->user->login($user);
+        if($user) {
+            if (Roles::find()->where(['id' => $user->role])->one()->role == 'admin') {
+                Yii::$app->session->set('admin', true);
+            } else {
+                Yii::$app->session->set('admin', false);
             }
-            else {
-                if($user->activated == 1) {
+            if ($this->validate()) {
+                if (Yii::$app->session->get('admin')) {
                     return Yii::$app->user->login($user);
-                }
-                else{
-                    Yii::$app->session->setFlash('error','Nalog nije aktiviran od strane admina');
-                    return false;
+                } else {
+                    if ($user->activated == 1) {
+                        return Yii::$app->user->login($user);
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
-        
         return false;
     }
 

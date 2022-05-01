@@ -29,13 +29,7 @@ AppAsset::register($this);
     <body class="d-flex flex-column h-100 main-layout"
           style="background-image: url(<?= \yii\helpers\Url::to('@web/images/vineFlip.jpg') ?>); background-size: cover">
     <?php $this->beginBody() ?>
-
-    <header>
-
-
-    </header>
-
-    <main role="main" class="flex-shrink-0">
+    <div class="d-flex">
         <?= Nav::widget([
             'options' => ['class' => 'pt-3 pb-5 side-nav col-auto col-md-3 col-xl-2 px-0 nav flex-column min-vh-100'],
             'items' => [
@@ -43,11 +37,11 @@ AppAsset::register($this);
                 ['label' => '<h5 class="mb-3 text-uppercase">HOME</h5>', 'url' => ['/site/index']],
                 ['label' => '<h5 class="mb-3 text-uppercase">About</h5>', 'url' => ['/site/about']],
                 ['label' => '<h5 class="mb-3 text-uppercase">Contact</h5>', 'url' => ['/site/contact']],
-                ['label' => '<h5 class="mb-3 text-uppercase">ADMIN</h5>',
+                ['label' => '<h5 class="text-uppercase">ADMIN</h5>',
                     'items' => [
-                        ['label' => '<h5 class="mb-3 text-uppercase">USERS</h5>', 'url' => ['/admin/users']],
-                ]],
-                ['label' => '<i class="fa-solid fa-user"></i><h5 class="mb-3 text-uppercase text-wrap">Odjavi se <div>(' . Yii::$app->user->identity->name . " " . Yii::$app->user->identity->surname . ')</div></h5>',
+                        ['label' => '<h5 class="mb-3 text-uppercase">USERS</h5>', 'url' => ['/user/index']],
+                    ]],
+                ['label' => '<h5 class="mb-3 text-center text-uppercase text-wrap"><span >Odjavi se </span><div><i class="far fa-user me-2"></i>' . Yii::$app->user->identity->name . " " . Yii::$app->user->identity->surname . '</div></h5>',
                     'url' => ['/site/logout'],
                     'options' => ['class' => 'position-absolute bottom-0 pb-3']
                 ],
@@ -55,15 +49,18 @@ AppAsset::register($this);
             'encodeLabels' => false,
 
         ]) ?>
-        <div>
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </div>
-    </main>
 
-    <footer class="footer mt-auto py-3 text-muted">
+        <main role="main" class="h-100 w-100 p-4">
+            <div class="content-wrapper h-100">
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </main>
 
-    </footer>
+        <footer class="footer mt-auto py-3 text-muted">
+
+        </footer>
+    </div>
 
     <?php $this->endBody() ?>
     </body>

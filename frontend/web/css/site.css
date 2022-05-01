@@ -2,33 +2,113 @@ body {
     font-family: 'Abel', sans-serif;
 }
 
-.blackText{
+.blackText {
     color: black;
 }
 
-.main-layout{
+.main-layout {
     overflow: hidden;
 }
 
-.side-nav{
-    background:rgb(142,79,26);
+.side-nav {
+    background: rgb(142, 79, 26);
     color: white;
     width: 220px;
 }
 
-.side-nav a{
+.dropdown-toggle.nav-link {
+    display: flex;
+    align-content: center;
+}
+
+.nav-link {
+    align-items: center;
+}
+
+.dropdown-toggle::after {
+    position: absolute;
+    display: inline-block;
+    content: '';
+    top: 35%;
+    left: 30%;
+}
+
+.side-nav a {
+    align-content: center;
     text-decoration: none;
     color: white;
 }
 
-.side-nav a:hover{
+.side-nav a.nav-link.active {
     text-decoration: none;
     color: black;
 }
 
-.side-nav a:active{
+.side-nav a:hover {
     text-decoration: none;
     color: black;
+}
+
+.dropdown-menu {
+    padding-top: 0;
+    width: 80%;
+    background: rgb(142, 79, 26);
+    color: white;
+    border: none;
+}
+
+.dropdown-menu a {
+    margin-left: 20%;
+    color: white;
+}
+
+.table-row {
+    background: white;
+    text-decoration: none;
+    color: black;
+}
+
+.table-row a{
+    text-decoration: none;
+    color: #572532;
+}
+
+.table-row td {
+    border: 1px solid #572532;
+}
+
+.table-row td:last-child {
+    border-left: none;
+}
+
+.header-row {
+    background: #572532;
+    color: white;
+}
+
+.header-row th {
+    border-right: 1px solid white;
+}
+
+.header-row th:last-child {
+    border-right: none;
+}
+
+.header-row a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: none;
+    color: black;
+    background: rgb(142, 79, 26);
+}
+
+.dropdown-menu a.dropdown-item.active {
+    text-decoration: none;
+    color: black;
+    background: rgb(142, 79, 26);
 }
 
 .login-box {
@@ -39,7 +119,7 @@ body {
 }
 
 #signUpModal .modal-content {
-    background:rgba(255,255,255, 0.3);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .black-text-link {
@@ -48,7 +128,7 @@ body {
     text-decoration: none;
 }
 
-.remember-me:checked{
+.remember-me:checked {
     background-color: red !important;
 }
 
@@ -70,6 +150,7 @@ input.is-valid ~ .form-check-label {
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
 }
+
 @keyframes spin {
     to {
         -webkit-transform: rotate(360deg);

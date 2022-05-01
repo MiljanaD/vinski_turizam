@@ -18,7 +18,9 @@ class AppAsset extends AssetBundle
         'js/main.js'
     ];
     public $depends = [
+        'rmrevin\yii\fontawesome\CdnFreeAssetBundle',
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
+        'frontend\assets\SweetAlertAsset',
     ];
 }
