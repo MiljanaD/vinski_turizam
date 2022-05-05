@@ -58,9 +58,8 @@ class ResetPasswordForm extends Model
     public function resetPassword()
     {
         $user = $this->_user;
-        $user->setPassword($this->password);
+        $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
         $user->removePasswordResetToken();
-        $user->generateAuthKey();
 
         return $user->save(false);
     }

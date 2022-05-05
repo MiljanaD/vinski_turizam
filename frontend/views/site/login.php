@@ -24,9 +24,6 @@ $this->context->layout = 'landing';
         <div class="my-1 mx-0" style="color:white;">
             Ako ste zaboravili sifru, mozete je <?= Html::a('resetovati.', ['site/request-password-reset'],
                 ['class' => 'black-text-link']) ?>
-            <br>
-            Trebate novi verifikacijski mail? <?= Html::a('Posalji ponovo.', ['site/resend-verification-email'],
-                ['class' => 'black-text-link']) ?>
         </div>
 
         <div class="form-group d-flex flex-column">

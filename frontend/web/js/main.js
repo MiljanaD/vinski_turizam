@@ -1,15 +1,47 @@
-$("#openSignUp").click(function(){
+yii.confirm = function (message, ok, cancel) {
+    var title = $(this).data("title");
+    var confirm_label = $(this).data("ok");
+    var cancel_label = $(this).data("cancel");
+
+    new swal({
+        title: message,
+        showCancelButton: true,
+        buttons: {
+            confirm: {
+                label: confirm_label,
+                className: 'btn-danger btn-flat'
+            },
+            cancel: {
+                label: cancel_label,
+                className: 'btn-default btn-flat'
+            }
+        },
+    },).then((res) => {
+        if (res.isConfirmed) {
+            !ok || ok();
+        } else {
+            !cancel || cancel();
+        }
+
+    })
+};
+
+$("#openSignUp").click(function () {
     $("#signUpModal").modal('show')
         .find(".modal-body")
         .load($(this).attr('value'));
 });
 
-yii.confirm = function (message, okCallback, cancelCallback) {
-    swal({
-        title: message,
-        type: 'warning',
-        showCancelButton: true,
-        closeOnConfirm: true,
-        allowOutsideClick: true
-    }, okCallback);
-};
+$(".openUserModal").click(function () {
+    $("#user-grid-modal").modal().find(".modal-dialog").addClass('modal-lg');
+    $("#user-grid-modal").modal('show')
+        .find(".modal-body")
+        .load($(this).attr('value'));
+    $("#user-grid-modal").modal().find(".modal-title")
+        .html("<b>"+$(this).attr('title').toUpperCase() +"</b>");
+});
+
+$("#user-grid-modal").on("hidden.bs.modal", function(){
+    $(".modal-body").html("<div class=\"loader\"></div>");
+});
+

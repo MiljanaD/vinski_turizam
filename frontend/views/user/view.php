@@ -6,41 +6,69 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,
+        'options' => [
+            'class' => 'table table-bordered detail-view'
+        ],
         'attributes' => [
-            'id',
-            'name',
-            'surname',
+            'name' => [
+                'label' => 'Ime',
+                'value' => function ($model) {
+                    return $model->name;
+                }
+            ],
+            'surname' => [
+                'label' => 'Prezime',
+                'value' => function ($model) {
+                    return $model->surname;
+                }
+            ],
             'email:email',
-            'password',
-            'phone_number',
-            'street_number',
-            'role',
-            'street',
-            'status',
-            'verification_token',
-            'activated',
+            'phone_number' => [
+                'label' => 'Broj telefona',
+                'value' => function ($model) {
+                    return $model->phone_number;
+                }
+            ],
+            'role' => [
+                'label' => 'Rola',
+                'value' => function ($model) {
+                    return \common\models\Roles::findOne($model->role)->role;
+                }
+            ],
+            'street' => [
+                'label' => 'Ulica',
+                'value' => function ($model) {
+                    return \common\models\Street::findOne($model->street)->name . " " . $model->street_number;
+                }
+            ],
+            'municipality' => [
+                'label' => 'Opstina',
+                'value' => function ($model) {
+                    $street = \common\models\Street::findOne($model->street);
+                    return \common\models\Municipality::findOne($street->municipality_id)->name;
+                }
+            ],
+            'city' => [
+                'label' => 'Grad',
+                'value' => function ($model) {
+                    $street = \common\models\Street::findOne($model->street);
+                    $municipality = \common\models\Municipality::findOne($street->municipality_id);
+                    return \common\models\City::findOne($municipality->city_id)->name;
+                }
+            ],
+            'activated' => [
+                'label' => 'Nalog aktiviran',
+                'value' => function ($model) {
+                    return $model->activated == 1 ? 'Da' : 'Ne';
+                }
+            ],
         ],
     ]) ?>
 

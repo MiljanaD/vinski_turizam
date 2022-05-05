@@ -13,6 +13,8 @@ return [
         ],
         'mailer' => [
             'messageClass' => \yii\symfonymailer\Message::class
-        ]
+        ],
+
+
     ],
 ];

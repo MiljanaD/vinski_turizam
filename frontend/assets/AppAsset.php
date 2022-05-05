@@ -13,14 +13,15 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'dist/sweetalert2.css'
     ];
     public $js = [
-        'js/main.js'
+        'js/main.js',
+        'dist/sweetalert2.all.js'
     ];
     public $depends = [
         'rmrevin\yii\fontawesome\CdnFreeAssetBundle',
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
-        'frontend\assets\SweetAlertAsset',
     ];
 }

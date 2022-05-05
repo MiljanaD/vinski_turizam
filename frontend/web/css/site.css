@@ -62,13 +62,17 @@ body {
     color: white;
 }
 
+.table {
+    border: 1px solid #572532;
+}
+
 .table-row {
     background: white;
     text-decoration: none;
     color: black;
 }
 
-.table-row a{
+.table-row a {
     text-decoration: none;
     color: #572532;
 }
@@ -82,12 +86,12 @@ body {
 }
 
 .header-row {
-    background: #572532;
+    background: #DC9A44;
     color: white;
 }
 
 .header-row th {
-    border-right: 1px solid white;
+    border-right: 1px solid #572532;
 }
 
 .header-row th:last-child {
@@ -150,6 +154,24 @@ input.is-valid ~ .form-check-label {
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
 }
+
+.swal2-confirm {
+    background-color: #572532 !important;
+}
+
+.btn-reset-pass-submit {
+    background-color: #572532 !important;
+}
+
+.btn-submit-vinskit {
+    background-color: #572532 !important;
+}
+
+.user-view th {
+    background-color: #DC9A44 !important;
+    color: white;
+}
+
 
 @keyframes spin {
     to {

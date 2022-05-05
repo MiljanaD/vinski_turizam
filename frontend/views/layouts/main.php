@@ -40,7 +40,9 @@ AppAsset::register($this);
                 ['label' => '<h5 class="text-uppercase">ADMIN</h5>',
                     'items' => [
                         ['label' => '<h5 class="mb-3 text-uppercase">USERS</h5>', 'url' => ['/user/index']],
-                    ]],
+                    ],
+                    'visible' => Yii::$app->session->get('admin')
+                ],
                 ['label' => '<h5 class="mb-3 text-center text-uppercase text-wrap"><span >Odjavi se </span><div><i class="far fa-user me-2"></i>' . Yii::$app->user->identity->name . " " . Yii::$app->user->identity->surname . '</div></h5>',
                     'url' => ['/site/logout'],
                     'options' => ['class' => 'position-absolute bottom-0 pb-3']
