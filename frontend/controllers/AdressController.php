@@ -19,7 +19,7 @@ class AdressController extends Controller
                     [
                         'actions' => ['municipality'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?', '@'],
                     ],
                 ]
             ]

@@ -26,6 +26,10 @@ class m220329_204819_create_user_table extends Migration
             'street_number' => $this->integer()->notNull(),
             'role' => $this->integer()->notNull(),
             'street' => $this->integer()->notNull(),
+            'status' => $this->tinyInteger()->notNull()->defaultValue(0),
+            'verification_token' => $this->string()->notNull(),
+            'activated' => $this->tinyInteger()->notNull()->defaultValue(0),
+            'password_reset_token' => $this->string()
         ]);
 
         // creates index for column `role`

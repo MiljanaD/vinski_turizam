@@ -18,6 +18,8 @@ use yii\web\IdentityInterface;
  * @property int $street_number
  * @property int $role
  * @property int $street
+ * @property int $city
+ * @property int $municipality
  * @property bool $status
  * @property string $password_reset_token
  * @property string $verification_token
@@ -28,6 +30,8 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public $city;
+    public $municipality;
     /**
      * {@inheritdoc}
      */
@@ -66,6 +70,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'street_number' => 'Broj ulice',
             'role' => 'Rola',
             'street' => 'Ulica',
+            'activated' => 'Nalog aktiviran'
         ];
     }
 
