@@ -45,3 +45,17 @@ $("#user-grid-modal").on("hidden.bs.modal", function(){
     $(".modal-body").html("<div class=\"loader\"></div>");
 });
 
+
+$(".openVineRegionModal").click(function () {
+    $("#vine-region-grid-modal").modal().find(".modal-dialog").addClass('modal-lg');
+    $("#vine-region-grid-modal").modal('show')
+        .find(".modal-body")
+        .load($(this).attr('value'));
+    $("#vine-region-grid-modal").modal().find(".modal-title")
+        .html("<b>"+$(this).attr('title').toUpperCase() +"</b>");
+});
+
+$("#vine-region-grid-modal").on("hidden.bs.modal", function(){
+    $(".modal-body").html("<div class=\"loader\"></div>");
+});
+

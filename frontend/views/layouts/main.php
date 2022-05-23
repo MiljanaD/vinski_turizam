@@ -12,6 +12,13 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+$this->registerJs("
+$(document).ready( function() {
+$('.admin-dropdown').find('a').attr('disabled', true);
+    $('.admin-dropdown').find('a').addClass('show');
+    $('.admin-dropdown').find('.dropdown-menu').addClass('show');
+ })
+");
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -39,9 +46,11 @@ AppAsset::register($this);
                 ['label' => '<h5 class="mb-3 text-uppercase">Contact</h5>', 'url' => ['/site/contact']],
                 ['label' => '<h5 class="text-uppercase">ADMIN</h5>',
                     'items' => [
-                        ['label' => '<h5 class="mb-3 text-uppercase">USERS</h5>', 'url' => ['/user/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">KORISNICI</h5>', 'url' => ['/user/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">VINSKI REGIONI</h5>', 'url' => ['/vine-region/index']],
                     ],
-                    'visible' => Yii::$app->session->get('admin')
+                    'visible' => Yii::$app->session->get('admin'),
+                    'options' => ['class' => 'admin-dropdown']
                 ],
                 ['label' => '<h5 class="mb-3 text-center text-uppercase text-wrap"><span >Odjavi se </span><div><i class="far fa-user me-2"></i>' . Yii::$app->user->identity->name . " " . Yii::$app->user->identity->surname . '</div></h5>',
                     'url' => ['/site/logout'],

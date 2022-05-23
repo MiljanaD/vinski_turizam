@@ -172,6 +172,14 @@ input.is-valid ~ .form-check-label {
     color: white;
 }
 
+.vine-region-view th {
+    background-color: #DC9A44 !important;
+    color: white;
+}
+
+.vine-region-map {
+    height: 300px;
+}
 
 @keyframes spin {
     to {
