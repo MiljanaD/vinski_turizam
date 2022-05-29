@@ -54,7 +54,6 @@ $urlCreate = Url::to(['vine-region/create']);
                 'visibleButtons' => [
                     'update' => true,
                     'delete' => true,
-                    'view' => true,
                 ],
                 'buttons' => [
                     'delete' => function ($url, $model) {
