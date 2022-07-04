@@ -59,3 +59,29 @@ $("#vine-region-grid-modal").on("hidden.bs.modal", function(){
     $(".modal-body").html("<div class=\"loader\"></div>");
 });
 
+$(".openVineSortModal").click(function () {
+    $("#vine-sort-grid-modal").modal().find(".modal-dialog").addClass('modal-lg');
+    $("#vine-sort-grid-modal").modal('show')
+        .find(".modal-body")
+        .load($(this).attr('value'));
+    $("#vine-sort-grid-modal").modal().find(".modal-title")
+        .html("<b>"+$(this).attr('title').toUpperCase() +"</b>");
+});
+
+$("#vine-sort-grid-modal").on("hidden.bs.modal", function(){
+    $(".modal-body").html("<div class=\"loader\"></div>");
+});
+
+$(".openVineServiceModal").click(function () {
+    $("#vine-service-grid-modal").modal().find(".modal-dialog").addClass('modal-lg');
+    $("#vine-service-grid-modal").modal('show')
+        .find(".modal-body")
+        .load($(this).attr('value'));
+    $("#vine-service-grid-modal").modal().find(".modal-title")
+        .html("<b>"+$(this).attr('title').toUpperCase() +"</b>");
+});
+
+$("#vine-service-grid-modal").on("hidden.bs.modal", function(){
+    $(".modal-body").html("<div class=\"loader\"></div>");
+});
+

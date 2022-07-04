@@ -41,13 +41,14 @@ $('.admin-dropdown').find('a').attr('disabled', true);
             'options' => ['class' => 'pt-3 pb-5 side-nav col-auto col-md-3 col-xl-2 px-0 nav flex-column min-vh-100'],
             'items' => [
                 ['label' => '<h1 class="text-center font-weight-bolder text-white">VINSKIT</h1>', 'disabled' => true],
-                ['label' => '<h5 class="mb-3 text-uppercase">HOME</h5>', 'url' => ['/site/index']],
-                ['label' => '<h5 class="mb-3 text-uppercase">About</h5>', 'url' => ['/site/about']],
-                ['label' => '<h5 class="mb-3 text-uppercase">Contact</h5>', 'url' => ['/site/contact']],
+                ['label' => '<h5 class="mb-3 text-uppercase">pocetna stranica</h5>', 'url' => ['/site/index']],
+                ['label' => '<h5 class="mb-3 text-uppercase">vinarije</h5>', 'url' => ['/site/about']],
                 ['label' => '<h5 class="text-uppercase">ADMIN</h5>',
                     'items' => [
-                        ['label' => '<h5 class="mb-3 text-uppercase">KORISNICI</h5>', 'url' => ['/user/index']],
-                        ['label' => '<h5 class="mb-3 text-uppercase">VINSKI REGIONI</h5>', 'url' => ['/vine-region/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">korisnici</h5>', 'url' => ['/user/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">vinski regioni</h5>', 'url' => ['/vine-region/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">vinske sorte</h5>', 'url' => ['/vine-sort/index']],
+                        ['label' => '<h5 class="mb-3 text-uppercase">usluge vinarija</h5>', 'url' => ['/vine-service/index']],
                     ],
                     'visible' => Yii::$app->session->get('admin'),
                     'options' => ['class' => 'admin-dropdown']

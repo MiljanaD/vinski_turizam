@@ -177,6 +177,12 @@ input.is-valid ~ .form-check-label {
     color: white;
 }
 
+.vine-sort-view th {
+    background-color: #DC9A44 !important;
+    color: white;
+    white-space: nowrap;
+}
+
 .vine-region-map {
     height: 300px;
 }

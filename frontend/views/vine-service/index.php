@@ -5,37 +5,37 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\SearchVineRegion */
+/* @var $searchModel frontend\models\SearchVineService */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vinski regioni';
-$regions = \common\models\VineRegion::find()->all();
-$urlCreate = Url::to(['vine-region/create']);
+$this->title = 'Usluge vinarija';
+$urlCreate = Url::to(['vine-service/create']);
 ?>
+<div class="vine-service-index">
 
+    <h1 class="text-uppercase" style="color: white"><?= Html::encode($this->title) ?></h1>
 
-<div class="vine-region-index">
-
-
-        <h1 class="text-uppercase" style="color: white"><?= Html::encode($this->title) ?></h1>
     <div class="d-flex justify-content-end">
         <p>
-            <?= Html::a('Kreiraj novi region', 'JavaScript:void(0)', [
+            <?= Html::a('Kreiraj novu uslugu', 'JavaScript:void(0)', [
                 'value' => $urlCreate,
-                'title' => 'Kreiranje novog vinskog regiona' ,
-                'class' => 'me-2 openVineRegionModal btn btn-danger'
+                'title' => 'Kreiranje nove usluge za vinariju' ,
+                'class' => 'me-2 openVineServiceModal btn btn-danger'
             ]) ?>
         </p>
     </div>
 
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
         'columns' => [
             'name',
+            'description',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
@@ -51,34 +51,34 @@ $urlCreate = Url::to(['vine-region/create']);
                 ],
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        $url = Url::to(['vine-region/delete', 'id' => $model['id']]);
+                        $url = Url::to(['vine-service/delete', 'id' => $model['id']]);
                         return Html::a("<i class='far fa-trash-alt' style='color: #572532'></i>", $url, [
                             'data' => [
                                 'href' => $url,
-                                'confirm' => 'Da li zelite da obrisete vinski region '. $model->name .'?',
+                                'confirm' => 'Da li zelite da obrisete uslugu:  '. $model->name .'?',
                                 'method' => 'post',
                             ],
                             'class' => 'me-2'
                         ]);
                     },
                     'update' => function ($url, $model) {
-                        $url = Url::to(['vine-region/update', 'id' => $model['id']]);
+                        $url = Url::to(['vine-service/update', 'id' => $model['id']]);
                         return Html::a("<i class='far fa-edit' style='color: #572532'></i>", 'JavaScript:void(0)', [
                             'value' => $url,
-                            'title' => 'Izmjena podataka vinskog regiona'.' '.$model->name ,
-                            'class' => 'me-2 openVineRegionModal'
+                            'title' => 'Izmjena podataka usluge: '.' '.$model->name ,
+                            'class' => 'me-2 openVineServiceModal'
                         ]);
                     },
                     'view' => function ($url, $model) {
-                        $url = Url::to(['vine-region/view', 'id' => $model['id']]);
+                        $url = Url::to(['vine-service/view', 'id' => $model['id']]);
                         return Html::a("<i class='far fa-eye' style='color: #572532'></i>", 'JavaScript:void(0)', [
                             'value' => $url,
-                            'title' => 'Pregled podataka vinskog regiona: '.' '.$model->name,
-                            'class' => 'me-2 openVineRegionModal'
+                            'title' => 'Pregled podataka usluge: '.' '.$model->name,
+                            'class' => 'me-2 openVineServiceModal'
                         ]);
                     },
                 ]
-            ],
+            ]
         ],
         'headerRowOptions' => ['class' => 'header-row text-uppercase'],
         'options' => ['class' => 'h-100'],
@@ -86,11 +86,13 @@ $urlCreate = Url::to(['vine-region/create']);
         'layout' => '{items}{pager}'
     ]); ?>
 
+    <?php Pjax::end(); ?>
+
 </div>
 
 <?php
 
-Modal::begin(['id' => 'vine-region-grid-modal', 'title' => 'Registracija', 'titleOptions' => ['class' => 'blackText text-center w-100']]); ?>
+Modal::begin(['id' => 'vine-service-grid-modal', 'title' => 'Registracija', 'titleOptions' => ['class' => 'blackText text-center w-100']]); ?>
     <div class="loader"></div>
 <?php Modal::end();
 
