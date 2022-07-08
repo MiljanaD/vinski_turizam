@@ -42,7 +42,7 @@ $('.admin-dropdown').find('a').attr('disabled', true);
             'items' => [
                 ['label' => '<h1 class="text-center font-weight-bolder text-white">VINSKIT</h1>', 'disabled' => true],
                 ['label' => '<h5 class="mb-3 text-uppercase">pocetna stranica</h5>', 'url' => ['/site/index']],
-                ['label' => '<h5 class="mb-3 text-uppercase">vinarije</h5>', 'url' => ['/site/about']],
+                ['label' => '<h5 class="mb-3 text-uppercase">vinarije</h5>', 'url' => ['/winery/index']],
                 ['label' => '<h5 class="text-uppercase">ADMIN</h5>',
                     'items' => [
                         ['label' => '<h5 class="mb-3 text-uppercase">korisnici</h5>', 'url' => ['/user/index']],
