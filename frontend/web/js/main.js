@@ -85,3 +85,16 @@ $("#vine-service-grid-modal").on("hidden.bs.modal", function(){
     $(".modal-body").html("<div class=\"loader\"></div>");
 });
 
+$(".openWineryModal").click(function () {
+    $("#winery-grid-modal").modal().find(".modal-dialog").addClass('modal-lg');
+    $("#winery-grid-modal").modal('show')
+        .find(".modal-body")
+        .load($(this).attr('value'));
+    $("#winery-grid-modal").modal().find(".modal-title")
+        .html("<b>"+$(this).attr('title').toUpperCase() +"</b>");
+});
+
+$("#winery-grid-modal").on("hidden.bs.modal", function(){
+    $(".modal-body").html("<div class=\"loader\"></div>");
+});
+

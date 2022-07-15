@@ -13,6 +13,9 @@ $this->title = $model->name;
 
     <?= DetailView::widget([
         'model' => $model,
+        'options' => [
+            'class' => 'table table-bordered detail-view'
+        ],
         'attributes' => [
             'name' => [
                     'label' => 'Naziv usluge',

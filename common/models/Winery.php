@@ -19,12 +19,17 @@ use Yii;
  * @property Owner $owner0
  * @property Street $street0
  * @property WinerySocialMedia[] $winerySocialMedia
+ * @property int $city
+ * @property int $municipality
  */
 class Winery extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $city;
+    public $municipality;
+    public $contact;
+    public $contactInfo;
+    public $images;
+
     public static function tableName()
     {
         return 'winery';
@@ -41,6 +46,7 @@ class Winery extends \yii\db\ActiveRecord
             [['name', 'GPS_coordinates', 'description'], 'string', 'max' => 255],
             [['owner'], 'exist', 'skipOnError' => true, 'targetClass' => Owner::className(), 'targetAttribute' => ['owner' => 'id']],
             [['street'], 'exist', 'skipOnError' => true, 'targetClass' => Street::className(), 'targetAttribute' => ['street' => 'id']],
+            [['name', 'images', 'GPS_coordinates', 'owner','street','contact', 'contactInfo'],'safe']
         ];
     }
 
@@ -51,12 +57,53 @@ class Winery extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'street' => 'Street',
-            'GPS_coordinates' => 'Gps Coordinates',
-            'description' => 'Description',
-            'owner' => 'Owner',
+            'name' => 'Ime',
+            'street' => 'Ulica',
+            'municipality' => 'Opstina',
+            'city' => 'Grad',
+            'GPS_coordinates' => 'Gps koordinate',
+            'description' => 'Opis',
+            'owner' => 'Vlasnik',
+            'contact' => 'Kontakt'
         ];
+    }
+
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->save();
+            $this->refresh();
+            $contact = new Contact();
+            $contact->winery = $this->id;
+            switch ($this->contact) {
+                case 'email':
+                    $contact->email = $this->contactInfo;
+                    break;
+                case 'web_site':
+                    $contact->web_site = $this->contactInfo;
+                    break;
+                case 'phone':
+                    $contact->phone = $this->contactInfo;
+                    break;
+                case 'social_media':
+                    $contact->social_media = $this->contactInfo;
+                    break;
+            }
+
+            $contact->save();
+            foreach ($this->images as $image)
+            {
+                $modelImage = new Image();
+                $modelImage->name = $image->name;
+                $modelImage->winary = $this->id;
+                $modelImage->save();
+                $image->saveAs(dirname(dirname(__DIR__)) . '/frontend/web/images/winery-images/' . $image->name);
+            }
+            return true;
+        }
+        return false;
+
     }
 
     /**

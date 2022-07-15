@@ -53,6 +53,8 @@ return [
             'class' => yii\gii\Module::className(),
             'allowedIPs' => ['*'] // adjust this to your needs
         ],
+        // configuration adjustments for 'dev' environment
+
     ],
     'params' => $params,
 ];

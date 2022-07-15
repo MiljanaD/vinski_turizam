@@ -18,6 +18,7 @@ use Yii;
 class VineSort extends \yii\db\ActiveRecord
 {
     public $imageFile;
+
     /**
      * {@inheritdoc}
      */
@@ -32,8 +33,8 @@ class VineSort extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'vine_region','imageFile'], 'required'],
-            [['name'], 'unique','message' => 'This vine sort already exists!'],
+            [['name', 'vine_region', 'imageFile'], 'required'],
+            [['name'], 'unique', 'message' => 'This vine sort already exists!'],
             [['vine_region'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
@@ -47,11 +48,11 @@ class VineSort extends \yii\db\ActiveRecord
         if ($this->validate()) {
             $this->image = $this->name . '.' . $this->imageFile->extension;
             $this->save();
-            $this->imageFile->saveAs(dirname(dirname(__DIR__)).'/frontend/web/images/vine-sort-images/' . $this->name . '.' . $this->imageFile->extension);
+            $this->imageFile->saveAs(dirname(dirname(__DIR__)) . '/frontend/web/images/vine-sort-images/' . $this->name . '.' . $this->imageFile->extension);
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
 

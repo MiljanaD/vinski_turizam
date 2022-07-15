@@ -19,6 +19,7 @@ class m220707_204543_create_contact_table extends Migration
             'id' => $this->primaryKey(),
             'web_site' => $this->string(),
             'email' => $this->string(),
+            'social_media' => $this->string(),
             'phone' => $this->string(),
             'winery' => $this->integer()->notNull(),
         ]);

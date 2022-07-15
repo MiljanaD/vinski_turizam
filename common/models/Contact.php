@@ -11,6 +11,7 @@ use Yii;
  * @property string|null $web_site
  * @property string|null $email
  * @property string|null $phone
+ * @property string|null $social_media
  * @property int $winery
  *
  * @property Winery $winery0
@@ -33,8 +34,9 @@ class Contact extends \yii\db\ActiveRecord
         return [
             [['winery'], 'required'],
             [['winery'], 'integer'],
-            [['web_site', 'email', 'phone'], 'string', 'max' => 255],
+            [['web_site', 'email', 'phone', 'social_media'], 'string', 'max' => 255],
             [['winery'], 'exist', 'skipOnError' => true, 'targetClass' => Winery::className(), 'targetAttribute' => ['winery' => 'id']],
+            [['web_site', 'email', 'phone', 'social_media'], 'safe']
         ];
     }
 

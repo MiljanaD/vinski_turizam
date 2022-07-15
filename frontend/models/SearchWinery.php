@@ -2,9 +2,11 @@
 
 namespace frontend\models;
 
+use common\models\Owner;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Winery;
+use Yii;
 
 /**
  * SearchWinery represents the model behind the search form of `common\models\Winery`.
@@ -55,12 +57,25 @@ class SearchWinery extends Winery
             // $query->where('0=1');
             return $dataProvider;
         }
+        $userId = \Yii::$app->user->identity->getId();
+        if(!Yii::$app->session->get('admin'))
+        {
+            $owner_id= Owner::find()->where(['user_id' => $userId])->one()->id;
+            $query->andFilterWhere([
+                'owner' => $owner_id
+            ]);
+        }
+        else
+        {
+            $query->andFilterWhere([
+                'owner' => $this->owner
+            ]);
+        }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'street' => $this->street,
-            'owner' => $this->owner,
+            'street' => $this->street
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

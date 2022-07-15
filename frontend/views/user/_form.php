@@ -14,8 +14,10 @@ use yii\widgets\ActiveForm;
 $cities = ArrayHelper::map(City::find()->asArray()->all(), 'id', 'name');
 $roles = ArrayHelper::map(\common\models\Roles::find()->all(), 'id', 'role');
 $street = Street::findOne($model->street);
-$model->municipality = Municipality::findOne($street->municipality_id)->id;
-$model->city = City::findOne($model->municipality)->id;
+$municipality = Municipality::findOne($street->municipality_id);
+$model->municipality = $municipality->id;
+$model->city = City::findOne($municipality->city_id)->id;
+
 
 $this->registerJs("
     $('#city-update').on('click', function() {
@@ -54,21 +56,24 @@ $this->registerJs("
 				  $( "select#municipality-update" ).html( data );
 				});
 			']) ?>
-
+            <?php
+            $municipalityList = ArrayHelper::map(Municipality::find()->where(['city_id' => $model->city])->all(), 'id', 'name');
+            ?>
             <?= $form->field($model, 'municipality')->dropDownList(
-                [$model->municipality => Municipality::findOne($model->municipality)->name],
+                $municipalityList,
                 ['id' => 'municipality-update', 'prompt' => '-Izaberite opstinu-',
                     'onclick' => '
             $.post( "' . Yii::$app->urlManager->createUrl('adress/street?id=') . '"+$(this).val(), function( data ) {
-            console.log(data);
             $( "select#street-update" ).html( data );
             });
-            ', 'disabled' => true],
+            '],
             ); ?>
-
+            <?php
+            $streetList = ArrayHelper::map(Street::find()->where(['municipality_id' => $model->municipality])->all(), 'id', 'name');
+            ?>
             <?= $form->field($model, 'street')->dropDownList(
-                [$model->street => \common\models\Street::findOne($model->street)->name],
-                ['id' => 'street-update', 'disabled' => true],
+               $streetList,
+                ['id' => 'street-update'],
             ); ?>
 
             <?= $form->field($model, 'street_number')->textInput() ?>

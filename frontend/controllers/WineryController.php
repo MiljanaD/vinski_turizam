@@ -2,11 +2,17 @@
 
 namespace frontend\controllers;
 
+use common\models\Contact;
+use common\models\Owner;
 use common\models\Winery;
 use frontend\models\SearchWinery;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 /**
  * WineryController implements the CRUD actions for Winery model.
@@ -55,9 +61,23 @@ class WineryController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return $this->goHome();
+    }
+
+
+    public function actionGallery($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('gallery', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return $this->goHome();
     }
 
     /**
@@ -69,17 +89,38 @@ class WineryController extends Controller
     {
         $model = new Winery();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+     if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if(!Owner::find()->where(['user_id' => $model->owner])->all()) {
+                    $owner = new Owner();
+                    $owner->user_id = $model->owner;
+                    $owner->type = 'fizicko lice';
+                    if ($owner->save()) {
+                        $owner->refresh();
+                        $model->owner = $owner->id;
+                    }
+                }
+                else
+                {
+                    $owner = Owner::find()->where(['user_id' => $model->owner])->one();
+                    $model->owner = $owner->id;
+                }
+                $model->street = $this->request->post()['Street']['name'];
+                $model->images = UploadedFile::getInstances($model, 'images');
+                if ($model->upload()) {
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+                'update' => false
+            ]);
+        }
+        return $this->goHome();
     }
 
     /**
@@ -93,13 +134,35 @@ class WineryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if(!Owner::find()->where(['user_id' => $model->owner])->all()) {
+                    $owner = new Owner();
+                    $owner->user_id = $model->owner;
+                    $owner->type = 'fizicko lice';
+                    if ($owner->save()) {
+                        $owner->refresh();
+                        $model->owner = $owner->id;
+                    }
+                }
+                else
+                {
+                    $owner = Owner::find()->where(['user_id' => $model->owner])->one();
+                    $model->owner = $owner->id;
+                }
+                $model->images = UploadedFile::getInstances($model, 'images');
+                if ($model->upload()) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
+        } if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $model,
+                'update' => true
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -111,9 +174,13 @@ class WineryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->request->isPost) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            return $this->goHome();
+        }
     }
 
     /**
