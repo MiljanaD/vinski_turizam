@@ -10,10 +10,8 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string|null $description
- * @property int $vine_region
  * @property string|null $image
  *
- * @property VineRegion $vineRegion
  */
 class VineSort extends \yii\db\ActiveRecord
 {
@@ -33,13 +31,11 @@ class VineSort extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'vine_region', 'imageFile'], 'required'],
+            [['name', 'imageFile'], 'required'],
             [['name'], 'unique', 'message' => 'This vine sort already exists!'],
-            [['vine_region'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
-            [['vine_region'], 'exist', 'skipOnError' => true, 'targetClass' => VineRegion::className(), 'targetAttribute' => ['vine_region' => 'id']],
-            [['name', 'vine_region', 'description', 'image'], 'safe']
+            [['name', 'description', 'image'], 'safe']
         ];
     }
 
@@ -65,19 +61,8 @@ class VineSort extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Ime vinske sorte',
             'description' => 'Kratak opis',
-            'vine_region' => 'Vinski region',
             'image' => 'Slika',
             'imageFile' => 'Slika'
         ];
-    }
-
-    /**
-     * Gets query for [[VineRegion]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVineRegion()
-    {
-        return $this->hasOne(VineRegion::className(), ['id' => 'vine_region']);
     }
 }

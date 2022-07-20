@@ -16,12 +16,14 @@
     "require": {
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
-        "yiisoft/yii2-bootstrap5": "~2.0.2",
+        "yiisoft/yii2-bootstrap5": "2.0.3",
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         "edwinhaq/yii2-simple-loading": "*",
         "yiisoft/yii2-swiftmailer": "2.1.x-dev",
         "rmrevin/yii2-fontawesome": "dev-master",
-        "bower-asset/sweetalert": "^2.1"
+        "bower-asset/sweetalert": "^2.1",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "yiisoft/yii-bootstrap5": "3.0.x-dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -36,7 +38,9 @@
     },
     "config": {
         "allow-plugins": {
-            "yiisoft/yii2-composer" : true
+            "yiisoft/yii2-composer": true,
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
         },
         "process-timeout": 1800,
         "fxp-asset": {

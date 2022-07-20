@@ -17,7 +17,7 @@ class SearchVineSort extends VineSort
     public function rules()
     {
         return [
-            [['id', 'vine_region'], 'integer'],
+            [['id'], 'integer'],
             [['name', 'description', 'image'], 'safe'],
         ];
     }
@@ -59,7 +59,6 @@ class SearchVineSort extends VineSort
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'vine_region' => $this->vine_region,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

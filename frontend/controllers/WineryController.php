@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Contact;
 use common\models\Owner;
 use common\models\Winery;
+use common\models\WineryService;
 use frontend\models\SearchWinery;
 use Yii;
 use yii\web\Controller;
@@ -80,6 +81,16 @@ class WineryController extends Controller
         return $this->goHome();
     }
 
+    public function actionServices($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('services', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return $this->goHome();
+    }
+
     /**
      * Creates a new Winery model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -107,6 +118,13 @@ class WineryController extends Controller
                 }
                 $model->street = $this->request->post()['Street']['name'];
                 $model->images = UploadedFile::getInstances($model, 'images');
+                foreach ($model->services as $service)
+                {
+                    $vineryService = new WineryService();
+                    $vineryService->service_id = $service;
+                    $vineryService->winery_id = $model->id;
+                    $vineryService->save();
+                }
                 if ($model->upload()) {
                     return $this->redirect(['index']);
                 }
@@ -151,6 +169,19 @@ class WineryController extends Controller
                     $model->owner = $owner->id;
                 }
                 $model->images = UploadedFile::getInstances($model, 'images');
+                $wineryServiceArray = WineryService::find()->where(['winery_id' => $model->id])->all();
+                foreach ($wineryServiceArray as $item)
+                {
+                    $wineryServiceModel = WineryService::findOne($item->id);
+                    $wineryServiceModel->delete();
+                }
+                foreach ($model->services as $service)
+                {
+                    $vineryService = new WineryService();
+                    $vineryService->service_id = $service;
+                    $vineryService->winery_id = $model->id;
+                    $vineryService->save();
+                }
                 if ($model->upload()) {
                     return $this->redirect(['index']);
                 }

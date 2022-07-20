@@ -26,12 +26,6 @@ $this->title = $model->name;
                             return $model->description;
                         }
                     ],
-                    'vine_region' => [
-                        'label' => 'Vinski region',
-                        'value' => function ($model) {
-                            return \common\models\VineRegion::findOne($model->vine_region)->name;;
-                        }
-                    ],
                 ],
             ]) ?>
             <div>

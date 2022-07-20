@@ -2,12 +2,16 @@
 
 namespace frontend\controllers;
 
+use common\models\RegionSort;
 use common\models\VineRegion;
+use common\models\VineSort;
 use frontend\models\SearchVineRegion;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * VineRegionController implements the CRUD actions for VineRegion model.
@@ -59,10 +63,19 @@ class VineRegionController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                foreach ($model->vineSort as $sort)
+                {
+                    $regionSort = new RegionSort();
+                    $regionSort->sort_id = $sort;
+                    $regionSort->region_id = $model->id;
+                    $regionSort->save();
+                }
+                return $this->redirect(['index']);
             }
-        } else {
-            $model->loadDefaultValues();
+            else {
+                $model->loadDefaultValues();
+            }
+
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create', [
@@ -77,7 +90,20 @@ class VineRegionController extends Controller
         $model = $this->findModel($id);
         if (Yii::$app->request->isPost) {
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                $regionSortArray = RegionSort::find()->where(['region_id' => $model->id])->all();
+                foreach ($regionSortArray as $item)
+                {
+                    $regionSortModel = RegionSort::findOne($item->id);
+                    $regionSortModel->delete();
+                }
+                foreach ($model->vineSort as $sort)
+                {
+                    $regionSort = new RegionSort();
+                    $regionSort->sort_id = $sort;
+                    $regionSort->region_id = $model->id;
+                    $regionSort->save();
+                }
+                return $this->redirect(['index']);
             }
         } else if (Yii::$app->request->isAjax) {
             return $this->renderAjax('update', [

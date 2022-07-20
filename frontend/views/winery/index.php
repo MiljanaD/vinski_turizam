@@ -35,7 +35,6 @@ $urlCreate = Url::to(['winery/create']);
         'columns' => [
             'name',
             'description',
-            'owner',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
@@ -43,12 +42,13 @@ $urlCreate = Url::to(['winery/create']);
                 },
                 'header' => 'Akcije',
                 'headerOptions' => ['class' => 'header-row text-uppercase'],
-                'template' => '{view}{update}{delete}{gallery}',
+                'template' => '{view}{update}{delete}{gallery}{services}',
                 'buttonOptions' => ['class' => 'me-2'],
                 'visibleButtons' => [
                     'update' => true,
                     'delete' => true,
                     'gallery' => true,
+                    'services' => true
                 ],
                 'buttons' => [
                     'delete' => function ($url, $model) {
@@ -83,6 +83,14 @@ $urlCreate = Url::to(['winery/create']);
                         return Html::a("<i class='far fa-images' style='color: #572532'></i>", 'JavaScript:void(0)', [
                             'value' => $url,
                             'title' => 'Galerija vinarije: '.' '.$model->name,
+                            'class' => 'me-2 openWineryModal'
+                        ]);
+                    },
+                    'services' => function ($url, $model) {
+                        $url = Url::to(['winery/services', 'id' => $model['id']]);
+                        return Html::a("<i class='fas fa-wine-glass-alt' style='color: #572532'></i>", 'JavaScript:void(0)', [
+                            'value' => $url,
+                            'title' => 'Usluge vinarije: '.' '.$model->name,
                             'class' => 'me-2 openWineryModal'
                         ]);
                     },

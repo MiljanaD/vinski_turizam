@@ -13,6 +13,17 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $update boolean */
 
+
+if($update)
+{
+    $services = ArrayHelper::map(\common\models\WineryService::find()->where(['winery_id' => $model->id])->all(), 'winery_id','winery_id');
+    foreach ($services as $service)
+    {
+        $model->services[] = $service;
+    }
+}
+
+$servicesArray = ArrayHelper::map(\common\models\VineService::find()->all(), 'id', 'name');
 $cities = ArrayHelper::map(City::find()->asArray()->all(), 'id', 'name');
 $users = ArrayHelper::map(User::find()->select(['id', 'CONCAT(name," ",surname) as full_name'])->asArray()->all(), 'id', 'full_name');
 
@@ -89,7 +100,14 @@ $this->registerJs("
                 'prompt' => '-Izaberite kontakt-'
             ]) ?>
 
-            <?= $form->field($model, 'contactInfo')->textInput()->label(''); ?>
+            <?= $form->field($model, 'contactInfo')->textInput()->label('Kontakt'); ?>
+
+            <?= $form->field($model, 'services')->checkboxList($servicesArray,
+                [
+                    'multiple' => 'multiple',
+                    'class' => ' mb-2'
+
+                ]); ?>
         </div>
         <div class="col-5">
             <?= $form->field($model, 'GPS_coordinates')->textInput(['maxlength' => true]) ?>

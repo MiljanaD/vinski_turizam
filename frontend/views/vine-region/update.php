@@ -12,6 +12,7 @@ $this->title = 'Izmjena podataka vinskog regiona: ' . $model->name;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'update' => true
     ]) ?>
 
 </div>

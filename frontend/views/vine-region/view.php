@@ -1,6 +1,8 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
@@ -57,13 +59,30 @@ initMap();
 });
 ");
 //$this->registerJsFile('@web/js/google-map.js');
-
-
+$sorts = [];
+$vineSorts = ArrayHelper::map(\common\models\RegionSort::find()->where(['region_id' => $model->id])->all(), 'sort_id','sort_id');
+foreach ($vineSorts as $sort)
+{
+    $sortModel = \common\models\VineSort::find()->where(['id' => $sort])->one();
+    $arrayHelper = [];
+    $arrayHelper['id']= $sortModel->id;
+    $arrayHelper['name'] =$sortModel->name;
+    $sorts[] = $arrayHelper;
+}
 ?>
 <div class="vine-region-view">
     <?php Pjax::begin(); ?>
     <h3 class="text-uppercase text-center"> <?=$model->name ?></h3>
 
     <div id="map" class="vine-region-map"></div>
+
+    <div class="mt-2">
+        <h2 class="text-center text-uppercase">Vinske sorte</h2>
+        <ul class="list-group list-group-flush">
+            <?php foreach ($sorts as $sort): ?>
+            <li class="list-group-item list-group-item-success text-center openVineSortModal"><?= $sort['name'] ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
     <?php \yii\widgets\Pjax::end(); ?>
 </div>

@@ -19,8 +19,6 @@ $vineRegions = ArrayHelper::map(\common\models\VineRegion::find()->asArray()->al
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'vine_region')->dropDownList($vineRegions) ?>
-
     <div class="mt-3"><?= $form->field($model, 'imageFile')->fileInput() ?></div>
 
 

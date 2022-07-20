@@ -24,8 +24,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'vine_region') ?>
-
     <?= $form->field($model, 'image') ?>
 
     <div class="form-group">

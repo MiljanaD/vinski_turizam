@@ -13,6 +13,7 @@ use Yii;
  */
 class VineRegion extends \yii\db\ActiveRecord
 {
+    public $vineSort;
     /**
      * {@inheritdoc}
      */
@@ -27,8 +28,9 @@ class VineRegion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'GPS_coordinates'], 'required'],
+            [['name', 'GPS_coordinates', 'vineSort'], 'required'],
             [['name', 'GPS_coordinates'], 'string', 'max' => 255],
+            [['name', 'GPS_coordinates', 'vineSort'], 'safe']
         ];
     }
 
@@ -41,6 +43,7 @@ class VineRegion extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Ime regiona',
             'GPS_coordinates' => 'Gps Koordinate',
+            'vineSort' => 'Vinske sorte'
         ];
     }
 }

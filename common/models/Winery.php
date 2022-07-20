@@ -29,6 +29,7 @@ class Winery extends \yii\db\ActiveRecord
     public $contact;
     public $contactInfo;
     public $images;
+    public $services;
 
     public static function tableName()
     {
@@ -41,12 +42,12 @@ class Winery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'GPS_coordinates', 'owner'], 'required'],
+            [['name', 'GPS_coordinates', 'owner','services'], 'required'],
             [['street', 'owner'], 'integer'],
             [['name', 'GPS_coordinates', 'description'], 'string', 'max' => 255],
             [['owner'], 'exist', 'skipOnError' => true, 'targetClass' => Owner::className(), 'targetAttribute' => ['owner' => 'id']],
             [['street'], 'exist', 'skipOnError' => true, 'targetClass' => Street::className(), 'targetAttribute' => ['street' => 'id']],
-            [['name', 'images', 'GPS_coordinates', 'owner','street','contact', 'contactInfo'],'safe']
+            [['name', 'images', 'GPS_coordinates', 'owner','street','contact', 'contactInfo', 'services'],'safe']
         ];
     }
 
@@ -64,7 +65,8 @@ class Winery extends \yii\db\ActiveRecord
             'GPS_coordinates' => 'Gps koordinate',
             'description' => 'Opis',
             'owner' => 'Vlasnik',
-            'contact' => 'Kontakt'
+            'contact' => 'Vrsta kontakta',
+            'services' => 'Usluge vinarije'
         ];
     }
 
