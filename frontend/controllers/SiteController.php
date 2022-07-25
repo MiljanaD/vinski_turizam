@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\Adresa;
+use common\models\VineRegion;
+use common\models\Winery;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -83,7 +85,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if(Yii::$app->request->isPost)
+        {
+            $search = $this->request->post()['val'];
+            $regions = VineRegion::find()->where(['like','name', $search])->all();
+            $wineries = Winery::find()->all();
+            return $this->renderAjax('index', ['regions' => $regions, 'wineries' => $wineries]);
+        }
+        else {
+            $regions = VineRegion::find()->all();
+            $wineries = Winery::find()->all();
+        }
+        return $this->render('index', ['regions' => $regions, 'wineries' => $wineries]);
+
+
     }
 
     /**
@@ -238,4 +253,5 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
 }

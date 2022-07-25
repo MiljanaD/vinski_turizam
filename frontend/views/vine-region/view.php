@@ -31,7 +31,7 @@ var x_center = x_min + ((x_max - x_min) / 2);
 var y_center = y_min + ((y_max - y_min) / 2);
 window.initMap = function initMap() {
     const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
+        zoom:12,
         center: { lat: x_center, lng: y_center },
         mapTypeId: 'terrain'
     });

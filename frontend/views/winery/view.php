@@ -17,8 +17,6 @@ $model->GPS_coordinates =json_decode($model->GPS_coordinates);
 ?>
 <script type="text/javascript">window.initMap = function initMap() {
         // The location of Uluru
-        //const gps_coordinates = JSON.parse(JSON.stringify("<?php //echo ?>//"));
-        // console.log(gps_coordinates);
         var lat = <?= $model->GPS_coordinates[0] ?>;
         var lng = <?= $model->GPS_coordinates[1] ?>;
         const uluru = { lat: lat, lng: lng };

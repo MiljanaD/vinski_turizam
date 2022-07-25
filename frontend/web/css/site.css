@@ -191,6 +191,11 @@ input.is-valid ~ .form-check-label {
     color: white;
 }
 
+vine-service-view th {
+    background-color: #DC9A44 !important;
+    color: white;
+}
+
 .vine-region-view th {
     background-color: #DC9A44 !important;
     color: white;
@@ -208,6 +213,10 @@ input.is-valid ~ .form-check-label {
 
 .vine-region-map {
     height: 300px;
+}
+
+.site-map {
+    height: 85vh;
 }
 
 @keyframes spin {
