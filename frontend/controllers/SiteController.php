@@ -3,8 +3,14 @@
 namespace frontend\controllers;
 
 use common\models\Adresa;
+use common\models\Municipality;
+use common\models\RegionSort;
+use common\models\Street;
 use common\models\VineRegion;
+use common\models\VineService;
+use common\models\VineSort;
 use common\models\Winery;
+use common\models\WineryService;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -85,18 +91,56 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->request->isPost)
+        if(Yii::$app->request->isAjax)
         {
             $search = $this->request->post()['val'];
-            $regions = VineRegion::find()->where(['like','name', $search])->all();
-            $wineries = Winery::find()->all();
-            return $this->renderAjax('index', ['regions' => $regions, 'wineries' => $wineries]);
+            $target = $this->request->post()['target'];
+            if($target == 'winery') {
+                $municipality = Municipality::find()->where(['like', 'name', $search])->all();
+                $municipalityIds = [];
+                foreach ($municipality as $item) {
+                    $municipalityIds[] = $item->id;
+                }
+                $streets = Street::find()->where(['municipality_id' => $municipalityIds])->all();
+                $streetIds = [];
+                foreach ($streets as $item) {
+                    $streetIds[] = $item->id;
+                }
+                $services = VineService::find()->where(['like', 'name', $search])->all();
+                $servicesIds = [];
+                foreach ($services as $item) {
+                    $servicesIds[] = $item->id;
+                }
+                $wineryService = WineryService::find()->where(['service_id' => $servicesIds])->all();
+                $wineryIds = [];
+                foreach ($wineryService as $item) {
+                    $wineryIds[] = $item->winery_id;
+                }
+                $wineries = Winery::find()->where(['street' => $streetIds])->orWhere(['id' => $wineryIds])->all();
+                $regions = VineRegion::find()->all();
+            }
+            else if($target == 'region') {
+                $vineSort = VineSort::find()->where(['like', 'name', $search])->all();
+                $vineSortIds = [];
+                foreach ($vineSort as $sort) {
+                    $vineSortIds[] = $sort->id;
+                }
+                $regionSort = RegionSort::find()->where(['sort_id' => $vineSortIds])->all();
+                $regionIds = [];
+                foreach ($regionSort as $item) {
+                    $regionIds[] = $item->region_id;
+                }
+                $regions = VineRegion::find()->where(['like', 'name', $search])->orWhere(['id' => $regionIds])->all();
+                $wineries = Winery::find()->all();
+            }
+            return $this->render('index', ['regions' => $regions, 'wineries' => $wineries]);
         }
         else {
             $regions = VineRegion::find()->all();
             $wineries = Winery::find()->all();
+            return $this->render('index', ['regions' => $regions, 'wineries' => $wineries]);
         }
-        return $this->render('index', ['regions' => $regions, 'wineries' => $wineries]);
+
 
 
     }

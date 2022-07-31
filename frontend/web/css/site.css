@@ -140,6 +140,9 @@ input.is-valid ~ .form-check-label {
     color: white !important;
 }
 
+.input-group {
+    width: unset !important;
+}
 .loader {
     position: relative;
     text-align: center;

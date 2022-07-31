@@ -8,6 +8,7 @@ use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
+/* @var $site boolean */
 /* @var $model common\models\VineRegion */
 
 $this->title = $model->name;
@@ -30,7 +31,7 @@ var y_max = Math.max.apply(Math,y_coordinates);
 var x_center = x_min + ((x_max - x_min) / 2);
 var y_center = y_min + ((y_max - y_min) / 2);
 window.initMap = function initMap() {
-    const map = new google.maps.Map(document.getElementById('map'), {
+    const map = new google.maps.Map(document.getElementById('region-map'), {
         zoom:12,
         center: { lat: x_center, lng: y_center },
         mapTypeId: 'terrain'
@@ -74,7 +75,7 @@ foreach ($vineSorts as $sort)
     <?php Pjax::begin(); ?>
     <h3 class="text-uppercase text-center"> <?=$model->name ?></h3>
 
-    <div id="map" class="vine-region-map"></div>
+    <div id="region-map" class="vine-region-map"></div>
 
     <div class="mt-2">
         <h2 class="text-center text-uppercase">Vinske sorte</h2>

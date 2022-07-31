@@ -21,14 +21,15 @@ $model->GPS_coordinates =json_decode($model->GPS_coordinates);
         var lng = <?= $model->GPS_coordinates[1] ?>;
         const uluru = { lat: lat, lng: lng };
         // The map, centered at Uluru
-        const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
+        const map = new google.maps.Map(document.getElementById('winery-map'), {
+            zoom: 12,
             center: uluru,
         });
         // The marker, positioned at Uluru
         const marker = new google.maps.Marker({
             position: uluru,
             map: map,
+            mapTypeId: 'terrain'
         });
     }
 
@@ -47,7 +48,7 @@ $model->GPS_coordinates =json_decode($model->GPS_coordinates);
                 'description',
             ],
         ]) ?>
-        <div id="map" style="height: 300px; width: 100%"></div>
+        <div id="winery-map" style="height: 300px; width: 100%"></div>
         <div class="text-center">
             <label class="text-uppercase font-weight-bold">vlasnik</label>
             <?= $this->render('//user/view', ['model' => $user]); ?>

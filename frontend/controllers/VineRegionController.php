@@ -47,11 +47,12 @@ class VineRegionController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($id, $site = false)
     {
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
                 'model' => $this->findModel($id),
+                'site' => $site
             ]);
         }
         return $this->goHome();

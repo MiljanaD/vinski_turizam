@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
 if($update)
 {
-    $services = ArrayHelper::map(\common\models\WineryService::find()->where(['winery_id' => $model->id])->all(), 'winery_id','winery_id');
+    $services = ArrayHelper::map(\common\models\WineryService::find()->where(['winery_id' => $model->id])->all(), 'service_id','service_id');
     foreach ($services as $service)
     {
         $model->services[] = $service;
