@@ -22,7 +22,7 @@ class VineSort extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'vine_sort';
+        return 'wine_sort';
     }
 
     /**

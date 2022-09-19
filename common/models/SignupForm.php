@@ -80,7 +80,7 @@ class SignupForm extends Model
     public function signup($street)
     {
         if (!$this->validate()) {
-            return null;
+            return false;
         }
 
         $user = new User();
@@ -93,6 +93,7 @@ class SignupForm extends Model
         $user->street_number = intval($this->streetNumber);
 //        $user->generateAuthKey();
         $user->generateEmailVerificationToken();
+
         return $user->save() && $this->sendEmail($user);
     }
 

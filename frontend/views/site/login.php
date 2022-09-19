@@ -33,6 +33,9 @@ $this->context->layout = 'landing';
         </div>
 
         <?php ActiveForm::end(); ?>
+        <div class="d-flex justify-content-center">
+            <?= Html::a('<i class="fa fa-home"></i> Početna strana', Url::to('index'), ['class' => 'mt-4 btn btn-secondary']) ?>
+        </div>
     </div>
 
     <?php

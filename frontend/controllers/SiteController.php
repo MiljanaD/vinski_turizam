@@ -39,7 +39,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup', 'login', 'index'],
+                'only' => ['logout', 'signup', 'login'],
                 'rules' => [
                     [
                         'actions' => ['signup','login'],
@@ -47,7 +47,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -159,7 +159,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if(Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->request->post()['LoginForm']['password'])) {
-                return $this->goBack();
+                return $this->goHome();
             }
         }
 
@@ -269,7 +269,8 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
-            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+            Yii::$app->session->set('admin', false);
+            Yii::$app->session->setFlash('success', 'Vaša email adresa je verifikovana!');
             return $this->goHome();
         }
 

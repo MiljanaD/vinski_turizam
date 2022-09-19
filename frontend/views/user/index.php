@@ -23,7 +23,6 @@ $this->title = 'Korisnici';
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
                 'columns' => [
                     'name' => [
                             'label' => 'Ime',

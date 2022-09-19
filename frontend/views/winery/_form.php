@@ -125,7 +125,6 @@ $this->registerJs("
                         ['id' => 'municipality-winery', 'prompt' => '-Izaberite opstinu-',
                             'onchange' => '
 				$.post( "' . Yii::$app->urlManager->createUrl('adress/street?id=') . '"+$(this).val(), function( data ) {
-				console.log("change");
 				  $( "select#street-winery" ).append( data );
 				});
 			'],

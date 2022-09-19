@@ -18,7 +18,7 @@ class VineService extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'vine_service';
+        return 'wine_service';
     }
 
     /**

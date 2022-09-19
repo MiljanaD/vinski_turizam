@@ -31,7 +31,6 @@ $urlCreate = Url::to(['vine-sort/create']);
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'columns' => [
             'name',
             [

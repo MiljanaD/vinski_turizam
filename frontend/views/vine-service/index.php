@@ -32,7 +32,6 @@ $urlCreate = Url::to(['vine-service/create']);
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'columns' => [
             'name',
             'description',

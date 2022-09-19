@@ -19,7 +19,7 @@ class VineRegion extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'vine_region';
+        return 'wine_region';
     }
 
     /**

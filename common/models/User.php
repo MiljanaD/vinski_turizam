@@ -76,8 +76,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function generateEmailVerificationToken()
     {
-        $this->verification_token =  Yii::$app->getSecurity()->generateRandomString();
-        var_dump($this->verification_token);
+        $this->verification_token =  Yii::$app->getSecurity()->generateRandomString();;
     }
 
     public function findByVerificationToken($token)
